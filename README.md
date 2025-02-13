@@ -10,21 +10,27 @@ Com ajuda do [Chatgpt](https://chatgpt.com/), criei esse script que, basta infor
 
 O script foi configurado para baixar as imagens com resolução de 1920x1080p, porém algumas imagens antigas são menores do que essa resolução. Abaixo segue a documentação do script e você pode copiar o código e executar em sua máquina. O código do script está no arquivo **download_dynamic.js**.
 
-## Orientações iniciais
 
-Importante destacar que você deve ter o **node** instalado em sua máquina, antes de executar o script.
 
-Instale a biblioteca `axios` :
+## Como usar o script
+
+Primeiro você deve ter o **nodejs** instalado em sua máquina, antes de executar o script.
+
+Baixe os arquivos **`countries.js`** e **`download_dynamic.js`** (sem a pasta `node_modules`) para a pasta onde você vai executar o projeto.
+
+Abra a pasta do seu projeto, já com os arquivos do mesmo, rode o comando abaixo para instalar todas as dependências novamente com base no `package.json`:
+
+```shell
+npm install
+```
+
+Ainda no terminal execute o comando abaixo para instalar a biblioteca `axios` :
 
 ```shell
 npm install axios
 ```
 
-Copie os arquivos do projeto (sem a pasta `node_modules`) e rode o seguinte comando para instalar todas as dependências novamente com base no `package.json`:
 
-```shell
-npm install
-```
 
 ## Lista de países
 
@@ -47,6 +53,66 @@ module.exports = [
     { name: 'Australia', code: 'au', startDate: '200905' },
 ];
 ```
+
+
+
+## Escolhendo o ano
+
+No arquivo **`download_dynamic.js`** você encontrará a variável **`YEAR`**, onde será declarado de qual ano você deseja baixar as imagens.
+
+```js
+const YEAR = '2009'; // Define manualmente o ano desejado para baixar as imagens no formato YYYY
+```
+
+
+
+## Onde salvar as imagens
+
+A variável **`DOWNLOAD_FOLDER`** define o local/pasta/diretório onde as imagens serão salvas. Você não precisa criar a pasta, ela será criada automaticamente, porém o endereço do local onde será salvo as imagens deve informado.
+
+- Windows 
+
+```js
+const DOWNLOAD_FOLDER = 'C:\\Users\\SeuUsuario\\Downloads\\bing_download';
+```
+
+Significa que as imagens serão salvas na pasta **bing_download** que está dentro da pasta **Downloads** no usuário **SeuUsuario**.
+
+- Linux/macOS
+
+```js
+const DOWNLOAD_FOLDER = '/home/seuusuario/Downloads/bing_download';
+```
+
+Significa que as imagens serão salvas no diretório **bing_download** que está dentro do diretório **Downloads** no usuário **seuusuario**.
+
+**LEMBRANDO** que a pasta/diretório **bing_download** não precisa estar criada, basta informar o nome da pasta onde serão salvos os arquivos, no endereço da variável **`DOWNLOAD_FOLDER`**.
+
+- No meu caso, o endereço ficou desta forma: 
+
+```js
+const DOWNLOAD_FOLDER = '/home/th/Pictures/bing'; // Define o diretório onde as imagens serão salvas
+```
+
+Significa que minhas imagens foram salvas na pasta **bing** dentro da pasta **Pictures** do usuário **th**.
+
+
+
+## Rodando o Script
+
+Com os arquivos **`coutries.js`** e **`download_dynamic.js`** criados, **`node`** e biblioteca **`axios`** instalados, o **ano** informado e o **caminho da pasta** onde as imagens serão salvas, você pode rodar o script no terminal com o seguinte comando:
+
+```sh
+node download_dynamic.js
+```
+
+A partir desse momento o script vai começar a baixar as imagens e você verá todo o desenvolvimento do script na tela do terminal.
+
+
+
+
+
+## Documentação `download_dynamic.js`
 
 
 
@@ -86,16 +152,6 @@ No meu caso, eu coloquei desta forma na minha máquina:
 
 ```js
 const DOWNLOAD_FOLDER = '/home/th/Pictures/bing'; // Define o diretório onde as imagens serão salvas
-```
-
-
-
-## Rodando o Script
-
-Com os arquivos **`coutries.js`** e **`download_dynamic.js`** criados, **`node`** e biblioteca **`axios`** instalados, o **ano** informado e o **caminho da pasta** onde as imagens serão salvas, você pode rodar o script com o seguinte comando:
-
-```sh
-node download_dynamic.js
 ```
 
 
@@ -185,6 +241,8 @@ async function main() {
 }
 ```
 
+
+
 ## Função `processCountry()`
 
 Função assíncrona que processa todas as imagens de um determinado país ao longo de um ano. Ela exibe mensagens no console para acompanhar o progresso da execução. Temos um **`for (let month = 1; month <= 12; month++)`** que itera sobre todos os meses do ano. O **`formattedMonth = month.toString().padStart(2, '0')`** formata o mês para garantir dois dígitos (ex: "01" a "12"). **`monthYear = `${YEAR}${formattedMonth}`;`** cria a string no formato `YYYYMM`, usada na busca de imagens.
@@ -227,6 +285,8 @@ async function processCountry(country) {
     }
 }
 ```
+
+
 
 ## Função `getAllImageIds( )`
 
