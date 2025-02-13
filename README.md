@@ -18,7 +18,6 @@ Instale a biblioteca `axios` :
 
 ```shell
 npm install axios
-
 ```
 
 Copie os arquivos do projeto (sem a pasta `node_modules`) e rode o seguinte comando para instalar todas as dependências novamente com base no `package.json`:
@@ -29,7 +28,7 @@ npm install
 
 ## Lista de países
 
-O arquivo `countries.js` é um **module.exports** o qual fornecerá para o script a lista com todos os países e com os códigos de cada país.
+O arquivo `countries.js` é um **module.exports** o qual fornecerá para o script a lista com todos os países e com os códigos de cada país. **ATENÇÃO**, você deve criar esse arquivo antes de rodar o script.
 
 ```js
 // countries.js
@@ -89,7 +88,19 @@ No meu caso, eu coloquei desta forma na minha máquina:
 const DOWNLOAD_FOLDER = '/home/th/Pictures/bing'; // Define o diretório onde as imagens serão salvas
 ```
 
-### sucess_download_list e error_download_list
+
+
+## Rodando o Script
+
+Com os arquivos **`coutries.js`** e **`download_dynamic.js`** criados, **`node`** e biblioteca **`axios`** instalados, o **ano** informado e o **caminho da pasta** onde as imagens serão salvas, você pode rodar o script com o seguinte comando:
+
+```sh
+node download_dynamic.js
+```
+
+
+
+## sucess_download_list e error_download_list
 
 Além do arquivo com a lista de países e o arquivo principal, teremos mais dois arquivos gerados automaticamente a parti da primeira execução. Os arquivos `sucess_download_list.js` e `error_download_list.js`.
 
@@ -362,5 +373,4 @@ async function downloadImage(countryCode, monthYear, imageId) {
     }
 }
 ```
-
 
