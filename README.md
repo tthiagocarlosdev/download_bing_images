@@ -128,13 +128,13 @@ const cheerio = require('cheerio'); // Importa a biblioteca 'cheerio' para manip
 const countries = require('./countries'); // Importa a lista de países a partir de um arquivo local chamado 'countries.js'
 ```
 
-Em seguida temos a variável **YEAR**, onde o usuário deve colocar manualmente o ano o qual ele quer baixar as imagens.
+Em seguida temos a variável **`YEAR`**, onde o usuário deve colocar manualmente o ano o qual ele quer baixar as imagens.
 
 ```js
 const YEAR = '2009'; // Define manualmente o ano desejado para baixar as imagens no formato YYYY
 ```
 
-A variável **DOWNLOAD_FOLDER** define o local/pasta/diretório onde você salvará as imagens. Voc%e não precisa criar a pasta, ela será criada automaticamente, porém o caminho deve informado e o nome da pasta será o último desse caminho.
+A variável **`DOWNLOAD_FOLDER`** define o local/pasta/diretório onde você salvará as imagens. Você não precisa criar a pasta, ela será criada automaticamente, porém o caminho deve informado e o nome da pasta será o último desse caminho.
 
 - Windows 
 
@@ -158,9 +158,9 @@ const DOWNLOAD_FOLDER = '/home/th/Pictures/bing'; // Define o diretório onde as
 
 ## sucess_download_list e error_download_list
 
-Além do arquivo com a lista de países e o arquivo principal, teremos mais dois arquivos gerados automaticamente a parti da primeira execução. Os arquivos `sucess_download_list.js` e `error_download_list.js`.
+Além do arquivo com a lista de países e o arquivo principal, teremos mais dois arquivos gerados automaticamente a parti da primeira execução. Os arquivos **`sucess_download_list.js`** e **`error_download_list.js`**.
 
-`sucess_download_list.js` armazena uma lista com objetos que informam o nome de cada imagem, de qual país ela foi baixada e a data no formato YYYYMM.
+**`sucess_download_list.js`** armazena uma lista com objetos que informam o nome de cada imagem, de qual país ela foi baixada e a data no formato **YYYYMM**.
 
 ```js
 module.exports = [
@@ -183,20 +183,20 @@ module.exports = [
 ];
 ```
 
-'error_download_list.js' armazena uma lista com o link de imagens que não foram baixadas devido a algum erro:
+**`error_download_list.js`** armazena uma lista com o link de imagens que não foram baixadas devido a algum erro:
 
 ```js
 module.exports = [];
 ```
 
-sucess_download_list e error_download_list:
+**`sucess_download_list`** e **`error_download_list`**:
 
 ```js
 const SUCCESS_LIST_FILE = 'sucess_download_list.js'; // Caminho do arquivo que armazenará a lista de imagens baixadas com sucesso
 const ERROR_LIST_FILE = 'error_download_list.js'; // Caminho do arquivo que armazenará a lista de erros de download
 ```
 
-Verificacação da pasta de download:
+Verificacação da pasta de **download**:
 
 ```js
 // Verifica se a pasta de destino das imagens já existe, se não existir, cria a pasta
@@ -205,7 +205,7 @@ if (!fs.existsSync(DOWNLOAD_FOLDER)) {
 }
 ```
 
-Verificação dos arquivos `sucess_download_list.js` e `error_download_list.js`:
+Verificação dos arquivos **`sucess_download_list.js`** e **`error_download_list.js`**:
 
 ```js
 // Verifica se os arquivos de listas de sucesso e erro já existem e os carrega, caso contrário, inicializa listas vazias
@@ -213,13 +213,15 @@ const successList = fs.existsSync(SUCCESS_LIST_FILE) ? require(`./${SUCCESS_LIST
 const errorList = fs.existsSync(ERROR_LIST_FILE) ? require(`./${ERROR_LIST_FILE}`) : []; // Lista de imagens que falharam no download
 ```
 
-**newDownloads** será um contador que informará quantas imagens foram baixadas ao final da execução do script:
+A variável **`newDownloads`** será um contador que informará quantas imagens foram baixadas ao final da execução do script:
 
 ```js
 let newDownloads = 0; // Variável que contabiliza quantas novas imagens foram baixadas durante a execução do script
 ```
 
-## Função principal `main( )`
+
+
+## Função principal `main()`
 
 O script inicia a partir da função principal para iniciar o processo de download.
 
@@ -229,7 +231,7 @@ main();
 
 Declaração da função assíncrona principal que gerencia o fluxo de execução do script. Dentro desta função temos um **`for (const country of countries)`** que itera sobre a lista de países. Para cada país, chamamos a função **`await processCountry(country);`** passando como parâmetro o objeto de cada país e aguardando sua conclusão antes de prosseguir.
 
-**`console.log(...)`**: Exibe a quantidade total de imagens baixadas durante a execução do script.
+**`console.log(...)`**: Exibe a quantidade total de imagens baixadas ao final da execução do script.
 
 ```js
 async function main() {
@@ -245,7 +247,7 @@ async function main() {
 
 ## Função `processCountry()`
 
-Função assíncrona que processa todas as imagens de um determinado país ao longo de um ano. Ela exibe mensagens no console para acompanhar o progresso da execução. Temos um **`for (let month = 1; month <= 12; month++)`** que itera sobre todos os meses do ano. O **`formattedMonth = month.toString().padStart(2, '0')`** formata o mês para garantir dois dígitos (ex: "01" a "12"). **`monthYear = `${YEAR}${formattedMonth}`;`** cria a string no formato `YYYYMM`, usada na busca de imagens.
+Função assíncrona que processa todas as imagens de um determinado país ao longo de um ano. Ela exibe mensagens no console para acompanhar o progresso da execução. Temos um **`for (let month = 1; month <= 12; month++)`** que itera sobre todos os meses do ano. O **`formattedMonth = month.toString().padStart(2, '0')`** formata o mês para garantir dois dígitos (ex: "01" a "12"). **`monthYear = `${YEAR}${formattedMonth}`;`** cria a string no formato **`YYYYMM`**, usada na busca de imagens.
 
 **`await getAllImageIds(country.code, monthYear)`** é uma função que obtém os IDs das imagens disponíveis para aquele país e mês. Em **`if (imageIds.length === 0)`** caso nenhuma imagem seja encontrada, a função pula para o próximo mês. O **`for (const imageId of imageIds)`** itera sobre os IDs das imagens e inicia o download de cada uma e por último o **`await downloadImage(country.code, monthYear, imageId)`** é uma função que realiza o download da imagem.
 
@@ -288,7 +290,7 @@ async function processCountry(country) {
 
 
 
-## Função `getAllImageIds( )`
+## Função `getAllImageIds()`
 
 Função assíncrona que busca os IDs das imagens disponíveis para um país em um determinado mês e ano.
 
@@ -342,43 +344,172 @@ async function getAllImageIds(countryCode, monthYear) {
 }
 ```
 
+------
 
 
-## Função `downloadImage( )`
 
-**Define o nome do arquivo de imagem**
+## Função `downloadImage()`
 
-- O nome do arquivo é gerado usando o `imageId`, adicionando a extensão `.jpg`.
+Aqui está a explicação detalhada da função `downloadImage()`, comentada passo a passo:
 
-**Verifica se a imagem já foi baixada**
+------
 
-- A função verifica na `successList` se já existe um registro com o mesmo nome de arquivo.
-- Se a imagem já foi baixada, exibe uma mensagem e pula para a próxima.
+### **Descrição Geral**
 
-**Obtém a URL da imagem**
+A função **`downloadImage()`** baixa uma imagem do site **Bing Wallpaper** com base no código do país (**`countryCode`**), no mês/ano (**`monthYear`**) e no identificador da imagem (**`imageId`**).
 
-- Chama `getImageUrl(countryCode, imageId)` para obter o link de download da imagem.
-- Se não encontrar a URL, adiciona o `imageId` à lista de erros e encerra a função.
+- Ela garante que a imagem:
+  - Só seja baixada se ainda não estiver registrada como baixada.
+  - Seja salva no diretório correto.
+  - Tenha seu download registrado com o país e a data.
+  - Se houver erro, a URL da imagem seja adicionada a um arquivo de erros.
 
-**Define o caminho do arquivo**
+### **Explicação do Código**
 
-- Define onde a imagem será salva usando `DOWNLOAD_FOLDER` e `fileName`.
+```js
+async function downloadImage(countryCode, monthYear, imageId) {
+```
 
-**Faz o download da imagem**
+- Declara a função **`downloadImage`** como assíncrona (`async`), pois faz chamadas a outras funções assíncronas (como `getImageUrl()` e `axios.get()`).
+- Recebe três parâmetros:
+  - **`countryCode`**: Código do país da imagem (ex: "us", "br", "jp").
+  - **`monthYear`**: Data no formato `YYYYMM` (ex: "202401" para janeiro de 2024).
+  - **`imageId`**: Identificador único da imagem no site.
 
-- Usa `axios` para fazer a requisição HTTP GET da URL da imagem.
-- Define `responseType: 'stream'` para tratar os dados como um fluxo contínuo.
-- Escreve os dados diretamente no arquivo local usando `fs.createWriteStream(filePath)`.
+```js
+    const fileName = `${imageId}.jpg`;
+```
 
-**Registra o download bem-sucedido**
+- Define o nome do arquivo da imagem com base no **`imageId`**, adicionando a extensão `.jpg`.
 
-- Adiciona um objeto com `image`, `country` e `date` à lista `successList`.
-- Incrementa o contador de downloads (`newDownloads`).
+```js
+    // Verifica se a imagem já foi baixada antes
+    if (successList.some(entry => entry.image === fileName)) {
+        console.log(`🔄 ${fileName} já foi baixado. Pulando...`);
+        return;
+    }
+```
 
-**Salva a lista de sucessos e erros**
+- Evita downloads duplicados:
+  - Usa **`successList.some()`** para verificar se o nome do arquivo já existe na lista de downloads bem-sucedidos.
+  - Se já foi baixado, exibe uma mensagem (`console.log`) e **retorna imediatamente**, evitando um download desnecessário.
 
-- Salva os dados no arquivo `sucess_download_list.js` (downloads bem-sucedidos).
-- Se houver erro, exibe a mensagem e salva a URL da imagem com erro no `error_download_list.js`
+```js
+    const imageUrl = await getImageUrl(countryCode, imageId);
+```
+
+- Chama a função **`getImageUrl()`** para obter a URL da imagem.
+- Usa **`await`** porque **`getImageUrl()`** é uma função assíncrona.
+
+```js
+    if (!imageUrl) {
+        errorList.push(imageId);
+        return;
+    }
+```
+
+- Se a URL da imagem não for encontrada:
+  - Adiciona o **`imageId`** à **`errorList`** (lista de erros).
+  - Retorna imediatamente, evitando um erro no download.
+
+```js
+    const filePath = `${DOWNLOAD_FOLDER}/${fileName}`;
+```
+
+- Define o caminho completo onde a imagem será salva, combinando:
+  - **`DOWNLOAD_FOLDER`**: Diretório de destino.
+  - **`fileName`**: Nome do arquivo.
+
+```js
+    try {
+```
+
+- Inicia um **bloco `try-catch`** para capturar possíveis erros durante o download.
+
+```js
+        const response = await axios({ url: imageUrl, method: 'GET', responseType: 'stream' });
+```
+
+- Faz o download da imagem com **`axios.get()`**:
+  - **`url: imageUrl`**: A URL da imagem.
+  - **`method: 'GET'`**: Método HTTP GET.
+  - **`responseType: 'stream'`**: Define que os dados devem ser recebidos como **fluxo de dados** (stream), essencial para downloads de arquivos grandes.
+
+```js
+        response.data.pipe(fs.createWriteStream(filePath));
+```
+
+- Salva a imagem no disco:
+  - **`response.data`** contém os dados da imagem como um fluxo (`stream`).
+  - Usa **`fs.createWriteStream(filePath)`** para **gravar os dados diretamente no arquivo** no diretório definido.
+
+```js
+        console.log(`✔ Download concluído: ${fileName}`);
+```
+
+- Exibe uma mensagem indicando que a imagem foi baixada com sucesso.
+
+```js
+        // Adiciona o registro detalhado
+        successList.push({
+            image: fileName,
+            country: countryCode,
+            date: monthYear
+        });
+```
+
+- Adiciona um registro detalhado da imagem baixada na **`successList`**:
+  - **`image`**: Nome do arquivo (`imageId.jpg`).
+  - **`country`**: Código do país (`countryCode`).
+  - **`date`**: Data do download (`monthYear` no formato `YYYYMM`).
+
+```js
+        newDownloads++; // Incrementa o contador de novos downloads
+```
+
+- **Aumenta o contador** de imagens baixadas com sucesso.
+
+```js
+        saveList(SUCCESS_LIST_FILE, successList);
+```
+
+- Salva a lista de downloads bem-sucedidos no arquivo **`sucess_download_list.js`**.
+
+```js
+    } catch (error) {
+```
+
+- Captura qualquer erro que ocorra dentro do `try`.
+
+```js
+        console.error(`❌ Erro ao baixar ${imageUrl}:`, error.message);
+```
+
+- Exibe uma mensagem de erro no console, incluindo a URL da imagem e a descrição do erro.
+
+```js
+        errorList.push(imageUrl);
+```
+
+- Adiciona a URL com falha na `errorList`.
+
+```js
+        saveList(ERROR_LIST_FILE, errorList);
+```
+
+- Salva a lista de erros no arquivo **`error_download_list.js`**.
+
+------
+
+### **Resumo**
+
+1. **Evita downloads duplicados** verificando a lista de sucesso.
+2. **Obtém a URL da imagem** com **`getImageUrl()`**.
+3. **Faz o download da imagem** e a salva no disco.
+4. **Registra o sucesso ou falha** no respectivo arquivo (**`sucess_download_list.js`** ou **`error_download_list.js`**).
+5. **Lida com erros** de forma segura e organizada.
+
+Essa função **garante downloads eficientes**, economiza recursos e mantém registros claros.
 
 ```js
 async function downloadImage(countryCode, monthYear, imageId) {
@@ -434,3 +565,423 @@ async function downloadImage(countryCode, monthYear, imageId) {
 }
 ```
 
+------
+
+
+
+## Função `getImageUrl()`
+
+Essa função tem como objetivo **obter a URL direta da imagem** no site **`bingwallpaper.anerg.com`**, com base no código do país e no identificador da imagem.
+
+### **Explicação do Código**
+
+```js
+async function getImageUrl(countryCode, imageId) {
+```
+
+- Declara uma função assíncrona chamada **`getImageUrl()`**, que recebe dois parâmetros:
+  - **`countryCode`**: O código do país (ex: `"us"` para Estados Unidos, `"br"` para Brasil).
+  - **`imageId`**: O identificador único da imagem (ex: `"img123456"`).
+
+```js
+    const detailUrl = `https://bingwallpaper.anerg.com/detail/${countryCode}/${imageId}`;
+    console.log(detailUrl);
+```
+
+- **Monta a URL da página de detalhes** da imagem no site, onde há informações sobre a foto.
+
+- Exemplo de URL gerada:
+
+  ```
+  https://bingwallpaper.anerg.com/detail/us/img123456
+  ```
+
+- **Exibe no console** a URL gerada, útil para depuração.
+
+```js
+    try {
+        const response = await axios.get(detailUrl);
+```
+
+- **Faz uma requisição HTTP GET** usando `axios` para acessar a página de detalhes da imagem.
+
+```js
+        const $ = cheerio.load(response.data);
+```
+
+- **Carrega o HTML da página** com `cheerio`, permitindo manipulação semelhante ao jQuery.
+
+```js
+        const imageUrl = $('a.btn.d-block.btn-secondary[href*="1920"]').attr('href');
+```
+
+- Procura no HTML um link (**<a>**) que contenha **"1920"** na URL.
+  - Esse link geralmente aponta para a versão **1920x1080** da imagem.
+
+```js
+        if (!imageUrl) {
+            console.error(`❌ Imagem não encontrada para ${imageId}`);
+            return null;
+        }
+```
+
+- **Se a imagem não for encontrada**, exibe uma mensagem de erro e retorna `null`.
+
+```js
+        return imageUrl;
+```
+
+- **Retorna a URL da imagem** se encontrada.
+
+```js
+    } catch (error) {
+        console.error(`❌ Erro ao buscar ${detailUrl}:`, error.message);
+        return null;
+    }
+}
+```
+
+- **Se houver erro na requisição** (ex: site fora do ar, conexão ruim), exibe uma mensagem de erro e retorna `null`.
+
+------
+
+### **Exemplo de Execução**
+
+Se chamarmos:
+
+```js
+const url = await getImageUrl('us', 'img123456');
+console.log(url);
+```
+
+E a página contiver:
+
+```html
+<a class="btn d-block btn-secondary" href="https://bingwallpaper.com/image1_1920x1080.jpg">Download</a>
+```
+
+Então, a função retornará:
+
+```js
+"https://bingwallpaper.com/image1_1920x1080.jpg"
+```
+
+Se a imagem **não existir**, o console mostrará:
+
+```
+❌ Imagem não encontrada para img123456
+```
+
+E a função retornará `null`.
+
+### **Resumo**
+
+1. **Acessa a página de detalhes da imagem** usando `axios`.
+2. **Usa `cheerio` para extrair o link** da imagem de **1920x1080**.
+3. **Lida com erros** e retorna `null` se a imagem não for encontrada.
+
+Essa função é **fundamental** para o script, pois permite obter os links diretos das imagens para o download! 🚀
+
+
+
+------
+
+
+
+## Função `saveList()`
+
+A função **`saveList()`** salva uma lista de dados em um arquivo JavaScript, garantindo que os registros sejam mantidos entre execuções do script.
+
+- Ela é usada para armazenar:
+- **Lista de downloads bem-sucedidos** (`sucess_download_list.js`).
+- **Lista de erros de download** (`error_download_list.js`).
+
+
+
+### **Explicação do Código**
+
+```js
+function saveList(filename, list) {
+```
+
+- Declara a função **`saveList()`**, que recebe dois parâmetros:
+  - **`filename`**: Nome do arquivo onde a lista será salva (ex: `"sucess_download_list.js"`).
+  - **`list`**: A lista de objetos (downloads bem-sucedidos ou erros) que será salva.
+
+```js
+    fs.writeFileSync(filename, `module.exports = ${JSON.stringify(list, null, 2)};`);
+```
+
+- Usa **`fs.writeFileSync()`** para **escrever** o conteúdo no arquivo de forma **síncrona** (garantindo que o arquivo seja salvo antes de continuar a execução).
+
+- O conteúdo do arquivo será:
+
+  - `module.exports = ...;` → Isso transforma o arquivo em um **módulo JavaScript**, permitindo que a lista seja importada e usada em outras partes do código (`require('./sucess_download_list.js')`).
+
+  - ```
+    JSON.stringify(list, null, 2)
+    ```
+
+     → Converte a lista para formato JSON legível:
+
+    - **`list`**: A lista que será convertida.
+    - **`null`**: Nenhuma modificação nos valores do objeto.
+    - **`2`**: Indica que a formatação terá **2 espaços de indentação**, tornando o JSON mais legível.
+
+
+
+### **Exemplo de como o arquivo fica**
+
+Se `successList` contiver os seguintes dados:
+
+```js
+[
+  { "image": "img1.jpg", "country": "us", "date": "202401" },
+  { "image": "img2.jpg", "country": "br", "date": "202401" }
+]
+```
+
+Então, após chamar:
+
+```js
+saveList("sucess_download_list.js", successList);
+```
+
+O arquivo `sucess_download_list.js` será salvo assim:
+
+```js
+module.exports = [
+  {
+    "image": "img1.jpg",
+    "country": "us",
+    "date": "202401"
+  },
+  {
+    "image": "img2.jpg",
+    "country": "br",
+    "date": "202401"
+  }
+];
+```
+
+Isso permite que o arquivo seja **importado e reutilizado** no código, mantendo um histórico de downloads.
+
+### **Resumo**
+
+1. **Salva os dados de forma permanente** entre execuções.
+2. **Garante que o formato seja legível** para humanos e para o código.
+3. **Permite importação fácil** com `require('./sucess_download_list.js')`.
+
+Essa função é essencial para **persistência de dados** no projeto! 
+
+
+
+------
+
+
+
+## Script completo do arquivo `download_dynamic.js`
+
+```js
+/**
+ * Script para baixar automaticamente imagens do Bing Wallpaper de um ano inteiro.
+ * Desenvolvido para buscar imagens de um ano especificado para todos os países listados em `countries.js`.
+ *
+ * Dependências:
+ * - Axios: Para fazer requisições HTTP
+ * - Cheerio: Para manipular HTML e extrair dados
+ * - File System (fs): Para manipulação de arquivos
+ */
+
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const countries = require('./countries'); // Importa a lista de países
+
+const YEAR = '2009'; // Define manualmente o ano desejado (YYYY)
+const DOWNLOAD_FOLDER = '/home/th/Pictures/bing'; // Define o caminho da pasta onde as imagens serão salvas
+
+const SUCCESS_LIST_FILE = 'sucess_download_list.js'; // Arquivo onde serão registradas as imagens baixadas
+const ERROR_LIST_FILE = 'error_download_list.js'; // Arquivo onde serão registrados os erros de download
+
+// Cria a pasta principal de downloads, se não existir
+if (!fs.existsSync(DOWNLOAD_FOLDER)) {
+    fs.mkdirSync(DOWNLOAD_FOLDER, { recursive: true });
+}
+
+// Lê listas anteriores (se existirem)
+const successList = fs.existsSync(SUCCESS_LIST_FILE) ? require(`./${SUCCESS_LIST_FILE}`) : [];
+const errorList = fs.existsSync(ERROR_LIST_FILE) ? require(`./${ERROR_LIST_FILE}`) : [];
+
+let newDownloads = 0; // Contador de novos downloads
+
+/**
+ * Obtém todos os IDs das imagens disponíveis para um país em um determinado mês.
+ * @param {string} countryCode Código do país (ex: 'us' para Estados Unidos)
+ * @param {string} monthYear Mês e ano no formato YYYYMM
+ * @returns {Promise<string[]>} Lista de IDs de imagens
+ */
+async function getAllImageIds(countryCode, monthYear) {
+    const archiveUrl = `https://bingwallpaper.anerg.com/archive/${countryCode}/${monthYear}`;
+
+    try {
+        const response = await axios.get(archiveUrl);
+        const $ = cheerio.load(response.data);
+        const imageIds = [];
+
+        // Extrai os IDs das imagens do HTML
+        $('a[href*="/detail/' + countryCode + '/"]').each((i, el) => {
+            const href = $(el).attr('href');
+            const imageId = href.split('/').pop();
+            if (!imageIds.includes(imageId)) {
+                imageIds.push(imageId);
+            }
+        });
+
+        return imageIds;
+    } catch (error) {
+        console.error(`❌ Erro ao acessar ${archiveUrl}:`, error.message);
+        return [];
+    }
+}
+
+/**
+ * Obtém a URL de download de uma imagem específica.
+ * @param {string} countryCode Código do país
+ * @param {string} imageId ID da imagem
+ * @returns {Promise<string|null>} URL da imagem ou null se não encontrada
+ */
+async function getImageUrl(countryCode, imageId) {
+    const detailUrl = `https://bingwallpaper.anerg.com/detail/${countryCode}/${imageId}`;
+    console.log(detailUrl);
+
+    try {
+        const response = await axios.get(detailUrl);
+        const $ = cheerio.load(response.data);
+        const imageUrl = $('a.btn.d-block.btn-secondary[href*="1920"]').attr('href');
+
+        if (!imageUrl) {
+            console.error(`❌ Imagem não encontrada para ${imageId}`);
+            return null;
+        }
+
+        return imageUrl;
+    } catch (error) {
+        console.error(`❌ Erro ao buscar ${detailUrl}:`, error.message);
+        return null;
+    }
+}
+
+/**
+ * Faz o download de uma imagem e a registra na lista de sucesso.
+ * @param {string} countryCode Código do país
+ * @param {string} monthYear Data no formato YYYYMM
+ * @param {string} imageId ID da imagem
+ */
+async function downloadImage(countryCode, monthYear, imageId) {
+    const fileName = `${imageId}.jpg`;
+
+    // Verifica se a imagem já foi baixada antes
+    if (successList.some(entry => entry.image === fileName)) {
+        console.log(`🔄 ${fileName} já foi baixado. Pulando...`);
+        return;
+    }
+
+    const imageUrl = await getImageUrl(countryCode, imageId);
+    if (!imageUrl) {
+        errorList.push(imageId);
+        return;
+    }
+
+    const filePath = `${DOWNLOAD_FOLDER}/${fileName}`;
+
+    try {
+        const response = await axios({ url: imageUrl, method: 'GET', responseType: 'stream' });
+        response.data.pipe(fs.createWriteStream(filePath));
+
+        console.log(`✔ Download concluído: ${fileName}`);
+
+        // Adiciona o registro detalhado
+        successList.push({
+            image: fileName,
+            country: countryCode,
+            date: monthYear
+        });
+
+        newDownloads++; // Incrementa o contador de novos downloads
+        saveList(SUCCESS_LIST_FILE, successList);
+    } catch (error) {
+        console.error(`❌ Erro ao baixar ${imageUrl}:`, error.message);
+        errorList.push(imageUrl);
+        saveList(ERROR_LIST_FILE, errorList);
+    }
+}
+
+/**
+ * Salva uma lista em um arquivo JSON.
+ * @param {string} filename Nome do arquivo
+ * @param {Array} list Lista de dados a serem salvos
+ */
+function saveList(filename, list) {
+    fs.writeFileSync(filename, `module.exports = ${JSON.stringify(list, null, 2)};`);
+}
+
+/**
+ * Processa um país, baixando imagens para todos os meses do ano especificado.
+ * @param {Object} country Objeto com nome e código do país
+ */
+async function processCountry(country) {
+    console.log(`\n 🔎 Buscando imagens para ${country.name.toUpperCase()} (${country.code}) no ano ${YEAR}...`);
+    console.log(`----------------------------------------------\n`);
+
+    for (let month = 1; month <= 12; month++) {
+        const formattedMonth = month.toString().padStart(2, '0');
+        const monthYear = `${YEAR}${formattedMonth}`;
+
+        console.log(`\n 📅 Processando mês: ${monthYear} para ${country.name} (${country.code})`);
+        console.log(`----------------------------------------------`);
+
+        const imageIds = await getAllImageIds(country.code, monthYear);
+
+        if (imageIds.length === 0) {
+            console.log(`⚠️ Nenhuma imagem encontrada para ${country.name} (${country.code}) no mês ${monthYear}. Pulando...`);
+            continue;
+        }
+
+        console.log(`📸 ${imageIds.length} imagens encontradas para ${country.name} no mês ${monthYear}. Iniciando download...`);
+        for (const imageId of imageIds) {
+            await downloadImage(country.code, monthYear, imageId);
+        }
+    }
+}
+
+/**
+ * Função principal que processa todos os países da lista.
+ */
+async function main() {
+    for (const country of countries) {
+        await processCountry(country);
+    }
+
+    console.log(`\n 📥 ${newDownloads} novas imagens foram baixadas nesta execução.`);
+}
+
+// Inicia a execução do script
+main();
+
+```
+
+
+
+------
+
+
+
+## Conclusão
+
+Espero que você goste deste script, uma solução para um hobby que eu tenho e que me economizou muito tempo.
+
+Com este script eu posso apenas selecionar o ano, executá-lo e enquanto ele baixa minhas imagens eu posso fazer outras atividades.
+
+O **ChatGpt** ajudou bastante na construção, mas claro, **foram necessárias algumas intervenções minhas** para que o script tivesse o funcionamento desejado. Para isso, o conhecimento básico na linguagem e em lógica de programação foram essenciais.
