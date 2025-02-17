@@ -14,7 +14,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const countries = require('./countries'); // Importa a lista de países
 
-const YEAR = '2009'; // Define manualmente o ano desejado (YYYY)
+const YEAR = '2024'; // Define manualmente o ano desejado (YYYY)
 const DOWNLOAD_FOLDER = '/home/th/Pictures/bing'; // Define o caminho da pasta onde as imagens serão salvas
 
 const SUCCESS_LIST_FILE = 'sucess_download_list.js'; // Arquivo onde serão registradas as imagens baixadas
@@ -179,7 +179,11 @@ async function main() {
         await processCountry(country);
     }
 
-    console.log(`\n 📥 ${newDownloads} novas imagens foram baixadas nesta execução.`);
+    console.log(`\n📥 ----------------------------------------------- 📥`);
+    console.log(`📥 ${newDownloads} novas imagens foram baixadas do ano ${YEAR}.`);
+    console.log(`📥 Total de fotos geral: ${successList.length}`);
+    console.log(`📥 Total de falhas geral: ${errorList.length}`);
+    console.log(`📥 ----------------------------------------------- 📥\n`);
 }
 
 // Inicia a execução do script
