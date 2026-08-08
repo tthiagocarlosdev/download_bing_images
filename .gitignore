@@ -1,0 +1,19 @@
+# Dependências (Nunca enviar para o GitHub)
+node_modules/
+jspm_packages/
+
+# Logs do NPM
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de sistema/ambiente (Opcional, mas recomendado)
+.env
+.DS_Store
+Thumbs.db
+
+# Arquivos criados pelo programa na execução
+sucess_download_list.js
+error_download_list.js

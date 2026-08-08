@@ -14,8 +14,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const countries = require('./countries'); // Importa a lista de países
 
-const YEAR = '2024'; // Define manualmente o ano desejado (YYYY)
-const DOWNLOAD_FOLDER = '/home/th/Pictures/bing'; // Define o caminho da pasta onde as imagens serão salvas
+const YEAR = '2025'; // Define manualmente o ano desejado (YYYY)
+const DOWNLOAD_FOLDER = '/home/thiagocarlos/Pictures/bing_images'; // Define o caminho da pasta onde as imagens serão salvas
 
 const SUCCESS_LIST_FILE = 'sucess_download_list.js'; // Arquivo onde serão registradas as imagens baixadas
 const ERROR_LIST_FILE = 'error_download_list.js'; // Arquivo onde serão registrados os erros de download
